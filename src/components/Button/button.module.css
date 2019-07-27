@@ -9,4 +9,9 @@
   height: 30px;
   cursor: pointer;
   background: #8bc34a;
+  outline: none;
+}
+.disabled {
+  cursor: not-allowed;
+  background: #cdcdcd !important;
 }

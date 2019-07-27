@@ -34,6 +34,7 @@ const TodoForm = ({ submit }) => {
           placeholder="Add Todo ..."
           value={state.value}
           onChange={onChange}
+          className={styles.input}
         />
         <button
           type="submit"

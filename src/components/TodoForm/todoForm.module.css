@@ -5,7 +5,7 @@
   justify-content: space-between;
 }
 
-input {
+.input {
   width: 79%;
   padding: 10px;
   border: 1px solid #d1d1d1;

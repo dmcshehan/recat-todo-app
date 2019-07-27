@@ -15,4 +15,12 @@
 
 .text {
   margin: 0;
+  padding-left: 10px;
+}
+.input {
+  padding: 12px;
+  border-radius: 40px;
+  border: none;
+  font-size: 15px;
+  outline: none;
 }
