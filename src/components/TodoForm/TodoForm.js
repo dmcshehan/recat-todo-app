@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import Button from "../Button/Button";
 
 //styles
 import styles from "./todoForm.module.css";
@@ -31,20 +32,14 @@ const TodoForm = ({ submit }) => {
         <input
           type="text"
           onFocus={() => setState({ ...state, focused: true })}
-          placeholder="Add Todo ..."
+          placeholder="Add Todos ..."
           value={state.value}
           onChange={onChange}
           className={styles.input}
         />
-        <button
-          type="submit"
-          className={`${styles.submit} ${
-            state.validated ? "" : styles.disabled
-          }`}
-          disabled={!state.validated}
-        >
+        <Button type="submit" disabled={!state.validated}>
           Add Todo
-        </button>
+        </Button>
       </form>
     </li>
   );

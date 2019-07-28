@@ -4,9 +4,10 @@ import randomId from "random-id";
 //custom components
 import Todo from "./components/Todo/Todo";
 import TodoContainer from "./components/TodoContainer/TodoContainer";
+import Button from "./components/Button/Button";
 
 //styles
-import "./App.css";
+import styles from "./app.module.css";
 
 class App extends Component {
   constructor(props) {
@@ -16,33 +17,50 @@ class App extends Component {
     this.onDelete = this.onDelete.bind(this);
     this.addTodo = this.addTodo.bind(this);
     this.onUpdate = this.onUpdate.bind(this);
+    this.clearAll = this.clearAll.bind(this);
   }
 
   state = {
-    todos: [
-      { id: 1, name: "First Todo", isComplete: true },
-      { id: 2, name: "Second Todo", isComplete: false },
-      { id: 3, name: "Third Todo", isComplete: false }
-    ],
+    todos: [],
     currentyEditing: null
   };
+
+  componentDidMount() {
+    let existingTodos = JSON.parse(localStorage.getItem("todos"));
+    console.log(existingTodos);
+
+    this.setState({
+      ...this.state,
+      todos: existingTodos !== null ? existingTodos : []
+    });
+  }
 
   onComplete(index) {
     let newTodos = [...this.state.todos];
     newTodos[index].isComplete = true;
-    this.setState({
-      ...this.state,
-      todos: newTodos
-    });
+    this.setState(
+      {
+        ...this.state,
+        todos: newTodos
+      },
+      () => {
+        localStorage.setItem("todos", JSON.stringify(newTodos));
+      }
+    );
   }
 
   onDelete(index) {
     let newTodos = [...this.state.todos];
     newTodos.splice(index, 1);
-    this.setState({
-      ...this.state,
-      todos: newTodos
-    });
+    this.setState(
+      {
+        ...this.state,
+        todos: newTodos
+      },
+      () => {
+        localStorage.setItem("todos", JSON.stringify(newTodos));
+      }
+    );
   }
 
   onEdit(index) {
@@ -57,27 +75,58 @@ class App extends Component {
     const newTodos = [...this.state.todos];
     newTodos[index].name = value;
 
-    this.setState({
-      ...this.state,
-      todos: newTodos
-    });
+    this.setState(
+      {
+        ...this.state,
+        todos: newTodos
+      },
+      () => {
+        localStorage.setItem("todos", JSON.stringify(newTodos));
+      }
+    );
   }
 
   addTodo(todo) {
     const newTodos = [
-      ...this.state.todos,
-      { name: todo, isComplete: false, id: randomId() }
+      { name: todo, isComplete: false, id: randomId() },
+      ...this.state.todos
     ];
-    this.setState({
-      ...this.state,
-      todos: newTodos
-    });
+
+    this.setState(
+      {
+        ...this.state,
+        todos: newTodos
+      },
+      () => {
+        localStorage.setItem("todos", JSON.stringify(newTodos));
+      }
+    );
+  }
+  clearAll() {
+    if (
+      window.confirm(
+        `Are you sure that you want to clear all todos? This can't be undo later!`
+      )
+    ) {
+      this.setState({ ...this.state, todos: [] }, () => {
+        localStorage.setItem("todos", JSON.stringify([]));
+      });
+    }
   }
 
   render() {
     return (
-      <div className="App">
-        <h1>Simple Todo App</h1>
+      <div className={styles.app}>
+        <div className={styles.header}>
+          <h2>Simple Todo App</h2>
+          <Button
+            onClick={this.clearAll}
+            style={{ background: "#f36464" }}
+            disabled={this.state.todos.length === 0 ? true : false}
+          >
+            Clear All
+          </Button>
+        </div>
         <TodoContainer add={this.addTodo}>
           {this.state.todos.map((todo, index) => {
             return (

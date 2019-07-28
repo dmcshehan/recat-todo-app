@@ -55,6 +55,7 @@ const Todo = ({ todo, onComplete, onDelete, onUpdate }) => {
       <div className="buttons">
         {state.currentlyEditing ? (
           <Button
+            rounded
             onClick={state.currentlyEditing ? onLocalUpdate : onComplete}
             disabled={state.inputValue.length <= 5}
           >
@@ -62,18 +63,22 @@ const Todo = ({ todo, onComplete, onDelete, onUpdate }) => {
           </Button>
         ) : !isComplete ? (
           <>
-            <Button onClick={onComplete}>
+            <Button onClick={onComplete} rounded>
               <FontAwesomeIcon icon={faCheck} />
             </Button>
-            <Button onClick={onEdit} style={{ background: "#2196F3" }}>
+            <Button onClick={onEdit} style={{ background: "#2196F3" }} rounded>
               <FontAwesomeIcon icon={faPencilAlt} />
             </Button>
-            <Button onClick={onDelete} style={{ background: "#f36464" }}>
+            <Button
+              onClick={onDelete}
+              style={{ background: "#f36464" }}
+              rounded
+            >
               <FontAwesomeIcon icon={faTimes} />
             </Button>
           </>
         ) : (
-          <Button onClick={onDelete} style={{ background: "#f36464" }}>
+          <Button onClick={onDelete} style={{ background: "#f36464" }} rounded>
             <FontAwesomeIcon icon={faTimes} />
           </Button>
         )}

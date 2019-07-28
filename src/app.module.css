@@ -1,0 +1,13 @@
+.app {
+  max-width: 500px;
+  margin: 50px auto;
+  background: #fafafa;
+  padding: 20px;
+  font-family: "Overpass", sans-serif;
+}
+
+.header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
