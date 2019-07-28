@@ -4,11 +4,3 @@
   box-sizing: border-box;
   margin: 0;
 }
-
-.App {
-  max-width: 500px;
-  margin: 50px auto;
-  background: #fafafa;
-  padding: 20px;
-  font-family: "Overpass", sans-serif;
-}
