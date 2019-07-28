@@ -118,7 +118,7 @@ class App extends Component {
     return (
       <div className={styles.app}>
         <div className={styles.header}>
-          <h2>Simple Todo App</h2>
+          <h2>My Todos</h2>
           <Button
             onClick={this.clearAll}
             style={{ background: "#f36464" }}
