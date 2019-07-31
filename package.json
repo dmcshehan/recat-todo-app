@@ -6,6 +6,7 @@
     "@fortawesome/fontawesome-svg-core": "^1.2.19",
     "@fortawesome/free-solid-svg-icons": "^5.9.0",
     "@fortawesome/react-fontawesome": "^0.1.4",
+    "antd": "^3.20.7",
     "kebab-case": "^1.0.0",
     "random-id": "^1.0.3",
     "react": "^16.8.6",

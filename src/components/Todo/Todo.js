@@ -1,16 +1,10 @@
 import React, { useState } from "react";
-import Button from "../Button/Button";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import {
-  faCheck,
-  faTimes,
-  faPencilAlt
-} from "@fortawesome/free-solid-svg-icons";
+import { Button, List, Input } from "antd";
 
 //styles
 import styles from "./todo.module.css";
 
-const Todo = ({ todo, onComplete, onDelete, onUpdate }) => {
+const Todo = ({ todo, onComplete, onDelete, onUpdate, onUndo }) => {
   const { name, isComplete } = todo;
 
   const [state, setState] = useState({
@@ -38,52 +32,46 @@ const Todo = ({ todo, onComplete, onDelete, onUpdate }) => {
   };
 
   return (
-    <li className={styles.todo}>
-      {state.currentlyEditing ? (
-        <input
-          className={styles.input}
-          type="text"
-          value={state.inputValue}
-          onChange={onChange}
-        />
-      ) : (
-        <p className={`${styles.text} ${isComplete ? styles.cut : ""}`}>
-          {name}
-        </p>
-      )}
+    <List.Item>
+      <List.Item.Meta
+        title={
+          state.currentlyEditing ? (
+            <Input
+              className={styles.input}
+              type="text"
+              value={state.inputValue}
+              onChange={onChange}
+            />
+          ) : (
+            <p className={`${styles.text} ${isComplete ? styles.cut : ""}`}>
+              {name}
+            </p>
+          )
+        }
+      />
 
-      <div className="buttons">
+      <Button.Group>
         {state.currentlyEditing ? (
           <Button
-            rounded
+            className={styles.editConfirm}
+            icon="check"
             onClick={state.currentlyEditing ? onLocalUpdate : onComplete}
             disabled={state.inputValue.length <= 5}
-          >
-            <FontAwesomeIcon icon={faCheck} />
-          </Button>
+          />
         ) : !isComplete ? (
           <>
-            <Button onClick={onComplete} rounded>
-              <FontAwesomeIcon icon={faCheck} />
-            </Button>
-            <Button onClick={onEdit} style={{ background: "#2196F3" }} rounded>
-              <FontAwesomeIcon icon={faPencilAlt} />
-            </Button>
-            <Button
-              onClick={onDelete}
-              style={{ background: "#f36464" }}
-              rounded
-            >
-              <FontAwesomeIcon icon={faTimes} />
-            </Button>
+            <Button onClick={onComplete} icon="check" />
+            <Button onClick={onEdit} icon="edit" />
+            <Button onClick={onDelete} icon="delete" />
           </>
         ) : (
-          <Button onClick={onDelete} style={{ background: "#f36464" }} rounded>
-            <FontAwesomeIcon icon={faTimes} />
-          </Button>
+          <>
+            <Button onClick={onUndo} icon="undo" />
+            <Button onClick={onDelete} icon="delete" />
+          </>
         )}
-      </div>
-    </li>
+      </Button.Group>
+    </List.Item>
   );
 };
 

@@ -1,6 +1,5 @@
 import React, { useState } from "react";
-import Button from "../Button/Button";
-
+import { Form, Input, Button } from "antd";
 //styles
 import styles from "./todoForm.module.css";
 
@@ -27,21 +26,26 @@ const TodoForm = ({ submit }) => {
   };
 
   return (
-    <li>
-      <form onSubmit={handleSubmit} className={styles.form}>
-        <input
-          type="text"
+    <Form layout="inline" onSubmit={handleSubmit} className={styles.form}>
+      <Form.Item>
+        <Input
           onFocus={() => setState({ ...state, focused: true })}
           placeholder="Add Todos ..."
           value={state.value}
           onChange={onChange}
           className={styles.input}
         />
-        <Button type="submit" disabled={!state.validated}>
-          Add Todo
-        </Button>
-      </form>
-    </li>
+      </Form.Item>
+
+      <Button
+        icon="plus-circle"
+        type="success"
+        htmlType="submit"
+        disabled={!state.validated}
+      >
+        Add
+      </Button>
+    </Form>
   );
 };
 

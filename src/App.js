@@ -1,10 +1,12 @@
 import React, { Component } from "react";
 import randomId from "random-id";
+import { List, Card } from "antd";
 
 //custom components
 import Todo from "./components/Todo/Todo";
-import TodoContainer from "./components/TodoContainer/TodoContainer";
-import Button from "./components/Button/Button";
+import TodoForm from "./components/TodoForm/TodoForm";
+
+import { Button } from "antd";
 
 //styles
 import styles from "./app.module.css";
@@ -18,6 +20,7 @@ class App extends Component {
     this.addTodo = this.addTodo.bind(this);
     this.onUpdate = this.onUpdate.bind(this);
     this.clearAll = this.clearAll.bind(this);
+    this.onUndo = this.onUndo.bind(this);
   }
 
   state = {
@@ -50,17 +53,19 @@ class App extends Component {
   }
 
   onDelete(index) {
-    let newTodos = [...this.state.todos];
-    newTodos.splice(index, 1);
-    this.setState(
-      {
-        ...this.state,
-        todos: newTodos
-      },
-      () => {
-        localStorage.setItem("todos", JSON.stringify(newTodos));
-      }
-    );
+    if (window.confirm(`Are you sure that you want to delete it?`)) {
+      let newTodos = [...this.state.todos];
+      newTodos.splice(index, 1);
+      this.setState(
+        {
+          ...this.state,
+          todos: newTodos
+        },
+        () => {
+          localStorage.setItem("todos", JSON.stringify(newTodos));
+        }
+      );
+    }
   }
 
   onEdit(index) {
@@ -102,6 +107,20 @@ class App extends Component {
       }
     );
   }
+  onUndo(index) {
+    let newTodos = [...this.state.todos];
+    newTodos[index].isComplete = false;
+    this.setState(
+      {
+        ...this.state,
+        todos: newTodos
+      },
+      () => {
+        localStorage.setItem("todos", JSON.stringify(newTodos));
+      }
+    );
+  }
+
   clearAll() {
     if (
       window.confirm(
@@ -116,31 +135,35 @@ class App extends Component {
 
   render() {
     return (
-      <div className={styles.app}>
-        <div className={styles.header}>
-          <h2>My Todos</h2>
+      <Card
+        className={styles.app}
+        title="My Todos"
+        extra={
           <Button
             onClick={this.clearAll}
-            style={{ background: "#f36464" }}
+            icon="delete"
+            type="danger"
             disabled={this.state.todos.length === 0 ? true : false}
           >
             Clear All
           </Button>
-        </div>
-        <TodoContainer add={this.addTodo}>
-          {this.state.todos.map((todo, index) => {
-            return (
-              <Todo
-                key={todo.id}
-                todo={todo}
-                onComplete={() => this.onComplete(index)}
-                onDelete={() => this.onDelete(index)}
-                onUpdate={value => this.onUpdate(value, index)}
-              />
-            );
-          })}
-        </TodoContainer>
-      </div>
+        }
+      >
+        <TodoForm submit={todo => this.addTodo(todo)} />
+        <List
+          dataSource={this.state.todos}
+          renderItem={(item, index) => (
+            <Todo
+              key={item.id}
+              todo={item}
+              onComplete={() => this.onComplete(index)}
+              onDelete={() => this.onDelete(index)}
+              onUpdate={value => this.onUpdate(value, index)}
+              onUndo={() => this.onUndo(index)}
+            />
+          )}
+        />
+      </Card>
     );
   }
 }
