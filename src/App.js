@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import randomId from "random-id";
+import produce from "immer";
 import { List, Card } from "antd";
 
 //custom components
@@ -30,22 +31,21 @@ class App extends Component {
 
   componentDidMount() {
     let existingTodos = JSON.parse(localStorage.getItem("todos"));
-    console.log(existingTodos);
 
-    this.setState({
-      ...this.state,
-      todos: existingTodos !== null ? existingTodos : []
-    });
+    this.setState(
+      produce(draft => {
+        draft.todos = existingTodos !== null ? existingTodos : [];
+      })
+    );
   }
 
   onComplete(index) {
     let newTodos = [...this.state.todos];
     newTodos[index].isComplete = true;
     this.setState(
-      {
-        ...this.state,
-        todos: newTodos
-      },
+      produce(draft => {
+        draft.todos = newTodos;
+      }),
       () => {
         localStorage.setItem("todos", JSON.stringify(newTodos));
       }
@@ -57,10 +57,9 @@ class App extends Component {
       let newTodos = [...this.state.todos];
       newTodos.splice(index, 1);
       this.setState(
-        {
-          ...this.state,
-          todos: newTodos
-        },
+        produce(draft => {
+          draft.todos = newTodos;
+        }),
         () => {
           localStorage.setItem("todos", JSON.stringify(newTodos));
         }
@@ -69,22 +68,21 @@ class App extends Component {
   }
 
   onEdit(index) {
-    this.setState({
-      ...this.state,
-      currentyEditing: index
-    });
+    this.setState(
+      produce(draft => {
+        draft.currentyEditing = index;
+      })
+    );
   }
 
   onUpdate(value, index) {
-    console.log(value, index);
     const newTodos = [...this.state.todos];
     newTodos[index].name = value;
 
     this.setState(
-      {
-        ...this.state,
-        todos: newTodos
-      },
+      produce(draft => {
+        draft.todos = newTodos;
+      }),
       () => {
         localStorage.setItem("todos", JSON.stringify(newTodos));
       }
@@ -98,10 +96,9 @@ class App extends Component {
     ];
 
     this.setState(
-      {
-        ...this.state,
-        todos: newTodos
-      },
+      produce(draft => {
+        draft.todos = newTodos;
+      }),
       () => {
         localStorage.setItem("todos", JSON.stringify(newTodos));
       }
@@ -111,10 +108,9 @@ class App extends Component {
     let newTodos = [...this.state.todos];
     newTodos[index].isComplete = false;
     this.setState(
-      {
-        ...this.state,
-        todos: newTodos
-      },
+      produce(draft => {
+        draft.todos = newTodos;
+      }),
       () => {
         localStorage.setItem("todos", JSON.stringify(newTodos));
       }
@@ -127,9 +123,14 @@ class App extends Component {
         `Are you sure that you want to clear all todos? This can't be undo later!`
       )
     ) {
-      this.setState({ ...this.state, todos: [] }, () => {
-        localStorage.setItem("todos", JSON.stringify([]));
-      });
+      this.setState(
+        produce(draft => {
+          draft.todos = [];
+        }),
+        () => {
+          localStorage.setItem("todos", JSON.stringify([]));
+        }
+      );
     }
   }
 
