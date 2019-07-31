@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import randomId from "random-id";
 import produce from "immer";
+import { Helmet } from "react-helmet";
 import { List, Card } from "antd";
 
 //custom components
@@ -136,35 +137,41 @@ class App extends Component {
 
   render() {
     return (
-      <Card
-        className={styles.app}
-        title="My Todos"
-        extra={
-          <Button
-            onClick={this.clearAll}
-            icon="delete"
-            type="danger"
-            disabled={this.state.todos.length === 0 ? true : false}
-          >
-            Clear All
-          </Button>
-        }
-      >
-        <TodoForm submit={todo => this.addTodo(todo)} />
-        <List
-          dataSource={this.state.todos}
-          renderItem={(item, index) => (
-            <Todo
-              key={item.id}
-              todo={item}
-              onComplete={() => this.onComplete(index)}
-              onDelete={() => this.onDelete(index)}
-              onUpdate={value => this.onUpdate(value, index)}
-              onUndo={() => this.onUndo(index)}
-            />
-          )}
-        />
-      </Card>
+      <>
+        <Helmet>
+          <meta charSet="utf-8" />
+          <title>My Todos</title>
+        </Helmet>
+        <Card
+          className={styles.app}
+          title="My Todos"
+          extra={
+            <Button
+              onClick={this.clearAll}
+              icon="delete"
+              type="danger"
+              disabled={this.state.todos.length === 0 ? true : false}
+            >
+              Clear All
+            </Button>
+          }
+        >
+          <TodoForm submit={todo => this.addTodo(todo)} />
+          <List
+            dataSource={this.state.todos}
+            renderItem={(item, index) => (
+              <Todo
+                key={item.id}
+                todo={item}
+                onComplete={() => this.onComplete(index)}
+                onDelete={() => this.onDelete(index)}
+                onUpdate={value => this.onUpdate(value, index)}
+                onUndo={() => this.onUndo(index)}
+              />
+            )}
+          />
+        </Card>
+      </>
     );
   }
 }
