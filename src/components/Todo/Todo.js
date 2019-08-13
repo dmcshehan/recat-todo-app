@@ -16,7 +16,7 @@ const Todo = ({ todo, onComplete, onDelete, onUpdate, onUndo }) => {
     setState({ ...state, currentlyEditing: true, inputValue: name });
   };
 
-  const onChange = e => {
+  const handleChange = e => {
     setState({
       ...state,
       inputValue: e.target.value
@@ -40,7 +40,7 @@ const Todo = ({ todo, onComplete, onDelete, onUpdate, onUndo }) => {
               className={styles.input}
               type="text"
               value={state.inputValue}
-              onChange={onChange}
+              onChange={handleChange}
             />
           ) : (
             <p className={`${styles.text} ${isComplete ? styles.cut : ""}`}>

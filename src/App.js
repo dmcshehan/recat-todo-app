@@ -1,6 +1,5 @@
 import React, { Component } from "react";
 import randomId from "random-id";
-import produce from "immer";
 import { Helmet } from "react-helmet";
 import { List, Card } from "antd";
 
@@ -23,71 +22,17 @@ class App extends Component {
     this.onUpdate = this.onUpdate.bind(this);
     this.clearAll = this.clearAll.bind(this);
     this.onUndo = this.onUndo.bind(this);
+    this.storeTodos = this.storeTodos.bind(this);
   }
 
   state = {
-    todos: [],
-    currentyEditing: null
+    todos: []
   };
 
   componentDidMount() {
     let existingTodos = JSON.parse(localStorage.getItem("todos"));
-
-    this.setState(
-      produce(draft => {
-        draft.todos = existingTodos !== null ? existingTodos : [];
-      })
-    );
-  }
-
-  onComplete(index) {
-    let newTodos = [...this.state.todos];
-    newTodos[index].isComplete = true;
-    this.setState(
-      produce(draft => {
-        draft.todos = newTodos;
-      }),
-      () => {
-        localStorage.setItem("todos", JSON.stringify(newTodos));
-      }
-    );
-  }
-
-  onDelete(index) {
-    if (window.confirm(`Are you sure that you want to delete it?`)) {
-      let newTodos = [...this.state.todos];
-      newTodos.splice(index, 1);
-      this.setState(
-        produce(draft => {
-          draft.todos = newTodos;
-        }),
-        () => {
-          localStorage.setItem("todos", JSON.stringify(newTodos));
-        }
-      );
-    }
-  }
-
-  onEdit(index) {
-    this.setState(
-      produce(draft => {
-        draft.currentyEditing = index;
-      })
-    );
-  }
-
-  onUpdate(value, index) {
-    const newTodos = [...this.state.todos];
-    newTodos[index].name = value;
-
-    this.setState(
-      produce(draft => {
-        draft.todos = newTodos;
-      }),
-      () => {
-        localStorage.setItem("todos", JSON.stringify(newTodos));
-      }
-    );
+    let fetchededTodos = existingTodos !== null ? existingTodos : [];
+    this.setState({ todos: fetchededTodos });
   }
 
   addTodo(todo) {
@@ -96,26 +41,38 @@ class App extends Component {
       ...this.state.todos
     ];
 
-    this.setState(
-      produce(draft => {
-        draft.todos = newTodos;
-      }),
-      () => {
-        localStorage.setItem("todos", JSON.stringify(newTodos));
-      }
-    );
+    this.setState({ todos: newTodos }, () => this.storeTodos(newTodos));
   }
+
+  onDelete(index) {
+    if (window.confirm(`Are you sure that you want to delete it?`)) {
+      let newTodos = [...this.state.todos];
+      newTodos.splice(index, 1);
+      this.setState({ todos: newTodos }, () => this.storeTodos(newTodos));
+    }
+  }
+
+  onComplete(index) {
+    let newTodos = [...this.state.todos];
+    newTodos[index].isComplete = true;
+    this.setState({ todos: newTodos }, () => this.storeTodos(newTodos));
+  }
+
+  onUpdate(value, index) {
+    const newTodos = [...this.state.todos];
+    newTodos[index].name = value;
+
+    this.setState({ todos: newTodos }, () => this.storeTodos(newTodos));
+  }
+
   onUndo(index) {
     let newTodos = [...this.state.todos];
     newTodos[index].isComplete = false;
-    this.setState(
-      produce(draft => {
-        draft.todos = newTodos;
-      }),
-      () => {
-        localStorage.setItem("todos", JSON.stringify(newTodos));
-      }
-    );
+    this.setState(newTodos, () => this.storeTodos(newTodos));
+  }
+
+  storeTodos(newTodos) {
+    localStorage.setItem("todos", JSON.stringify(newTodos));
   }
 
   clearAll() {
@@ -124,14 +81,7 @@ class App extends Component {
         `Are you sure that you want to clear all todos? This can't be undo later!`
       )
     ) {
-      this.setState(
-        produce(draft => {
-          draft.todos = [];
-        }),
-        () => {
-          localStorage.setItem("todos", JSON.stringify([]));
-        }
-      );
+      this.setState({ todos: [] }, () => this.storeTodos([]));
     }
   }
 
