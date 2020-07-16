@@ -1,3 +1,4 @@
-## ToDo Aplpication
+## React Redux Firebase Skeleton
 
-This app was made with the helpof React and React Hooks.
+- Your can use this skeleton to get started with a React,Redux,Firebase project
+- Firebase config must be added to `./src/auth/firebase.js`
