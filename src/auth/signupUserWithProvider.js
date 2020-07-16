@@ -19,6 +19,8 @@ export default function signUpUser(type) {
       const { isNewUser } = additionalUserInfo;
       const { uid } = user;
 
+      console.log(user);
+
       if (isNewUser) {
         // Add a new document in collection "cities"
         db.collection("users")

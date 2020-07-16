@@ -12,6 +12,9 @@ import FullScreenContainer from "./FullScreenContainer/FullScreenContainer";
 import DropDown from "./Dropdown/Dropdown";
 import Dashboard from "./Dashboard/Dashboard";
 import Navbar from "./Navbar/Navbar";
+
+import NotFound from "./404/404";
+import Home from "./Home/Home";
 import Signin from "./Signin/Signin";
 
 export default function App() {
@@ -38,8 +41,10 @@ export default function App() {
             <DropDown />
 
             <Switch>
+              <Route exact path='/' component={Home} />
               <Route exact path='/signin' component={Signin} />
               <Route exact path='/dashboard' component={Dashboard} />
+              <Route path='/' component={NotFound} />
             </Switch>
           </div>
         </FullScreenContainer>

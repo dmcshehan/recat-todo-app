@@ -1,12 +1,34 @@
 import React from "react";
+import { useSelector, useDispatch } from "react-redux";
+import { Link } from "react-router-dom";
+
+import {
+  openDropdown,
+  closeDropdown,
+} from "../../store/actionCreators/dropdown";
+
+import { imgBtn, border } from "./Navbar.module.scss";
 
 export default function NavBar() {
+  const dispatch = useDispatch();
+  const { user } = useSelector((state) => state.user);
+
+  const { isDropdownOpen } = useSelector((state) => state.dropDown);
+
+  function toggleDropdown(event) {
+    event.stopPropagation();
+    if (isDropdownOpen) {
+      return dispatch(closeDropdown());
+    }
+    dispatch(openDropdown());
+  }
+
   return (
     <nav className='navbar' role='navigation' aria-label='main navigation'>
       <div className='navbar-brand'>
-        <a className='navbar-item' href='https://bulma.io'>
+        <Link className='navbar-item' to='/'>
           <h2 className='title is-5'>Todo List App</h2>
-        </a>
+        </Link>
 
         <a
           role='button'
@@ -23,12 +45,29 @@ export default function NavBar() {
 
       <div id='navMenu' className='navbar-menu'>
         <div className='navbar-end'>
-          <a className='navbar-item'>Documentation</a>
-          <div className='navbar-item'>
-            <div className='buttons'>
-              <a className='button is-light'>Log in</a>
+          {user ? (
+            <>
+              <Link className='navbar-item' to='/dashboard'>
+                Dashboard
+              </Link>
+              <div className='navbar-item'>
+                <figure className='image is-48x48'>
+                  <img
+                    src={user.photoURL}
+                    alt=''
+                    onClick={toggleDropdown}
+                    className={`${imgBtn} ${isDropdownOpen ? border : ""}`}
+                  />
+                </figure>
+              </div>
+            </>
+          ) : (
+            <div className='navbar-item'>
+              <Link to='/signin' className='button is-primary'>
+                Login
+              </Link>
             </div>
-          </div>
+          )}
         </div>
       </div>
     </nav>

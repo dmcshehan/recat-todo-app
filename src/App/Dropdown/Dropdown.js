@@ -17,13 +17,12 @@ export default function Dropdown() {
 
   return user ? (
     <div
-      className='box'
-      className={`${classNames.dropDown} ${
+      className={`box ${classNames.dropDown} ${
         isDropdownOpen ? classNames.showDropdown : classNames.hideDropdown
       }`}
     >
       <figure className={`image ${classNames.avaratFigure}`}>
-        <img rounded={true} src={user.photoURL} alt='User Avatar' />
+        <img className='is-rounded' src={user.photoURL} alt='User Avatar' />
       </figure>
       <p className={`${classNames.displayName} has-text-centered`}>
         {user.displayName}
