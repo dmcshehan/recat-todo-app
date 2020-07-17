@@ -42,7 +42,6 @@ export default function App() {
 
             <Switch>
               <Route exact path='/' component={Home} />
-              <Route exact path='/' component={Home} />
               <Route exact path='/signin' component={Signin} />
               <Route exact path='/dashboard' component={Dashboard} />
               <Route path='/' component={NotFound} />
