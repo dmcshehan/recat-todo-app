@@ -13,6 +13,8 @@ import DropDown from "./Dropdown/Dropdown";
 import Dashboard from "./Dashboard/Dashboard";
 import Navbar from "./Navbar/Navbar";
 
+import Container from "./Container/Container";
+
 import NotFound from "./404/404";
 import Home from "./Home/Home";
 import Signin from "./Signin/Signin";
@@ -39,13 +41,14 @@ export default function App() {
           <div className={classNames.app}>
             <Navbar />
             <DropDown />
-
-            <Switch>
-              <Route exact path='/' component={Home} />
-              <Route exact path='/signin' component={Signin} />
-              <Route exact path='/dashboard' component={Dashboard} />
-              <Route path='/' component={NotFound} />
-            </Switch>
+            <Container>
+              <Switch>
+                <Route exact path='/' component={Home} />
+                <Route exact path='/signin' component={Signin} />
+                <Route exact path='/dashboard' component={Dashboard} />
+                <Route path='/' component={NotFound} />
+              </Switch>
+            </Container>
           </div>
         </FullScreenContainer>
       </BrowserRouter>
