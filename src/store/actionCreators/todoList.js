@@ -20,7 +20,7 @@ function fetchTodoLists() {
       .then(function (querySnapshot) {
         const todoLists = [];
         querySnapshot.forEach(function (doc) {
-          todoLists.push(doc.data());
+          todoLists.push({ ...doc.data(), _id: doc.id });
         });
 
         dispatch(fetchTodoListsSuccess(todoLists));
