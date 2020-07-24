@@ -45,20 +45,18 @@ export default function App() {
   return (
     <React.StrictMode>
       <BrowserRouter>
-        <FullScreenContainer onClick={handleBackgroundClick}>
-          <div className={classNames.app}>
-            <Navbar />
-            <DropDown />
-            <Container>
-              <Switch>
-                <Route exact path='/' component={Home} />
-                <Route exact path='/signin' component={Signin} />
-                <Route exact path='/dashboard' component={Dashboard} />
-                <Route path='/' component={NotFound} />
-              </Switch>
-            </Container>
-          </div>
-        </FullScreenContainer>
+        <div className={classNames.app} onClick={handleBackgroundClick}>
+          <Navbar />
+          <DropDown />
+          <Container>
+            <Switch>
+              <Route exact path='/' component={Home} />
+              <Route exact path='/signin' component={Signin} />
+              <Route exact path='/dashboard' component={Dashboard} />
+              <Route path='/' component={NotFound} />
+            </Switch>
+          </Container>
+        </div>
       </BrowserRouter>
     </React.StrictMode>
   );
