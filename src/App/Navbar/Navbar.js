@@ -7,7 +7,7 @@ import {
   closeDropdown,
 } from "../../store/actionCreators/dropdown";
 
-import { imgBtn, border } from "./Navbar.module.scss";
+import { imgBtn, border, navBar, figure } from "./Navbar.module.scss";
 
 export default function NavBar() {
   const dispatch = useDispatch();
@@ -24,10 +24,14 @@ export default function NavBar() {
   }
 
   return (
-    <nav className='navbar' role='navigation' aria-label='main navigation'>
+    <nav
+      className={`navbar ${navBar}`}
+      role='navigation'
+      aria-label='main navigation'
+    >
       <div className='navbar-brand'>
         <Link className='navbar-item' to='/'>
-          <h2 className='title is-5'>Todo List App</h2>
+          <h2 className='title is-5'>Todo App</h2>
         </Link>
 
         <a
@@ -51,7 +55,7 @@ export default function NavBar() {
                 Dashboard
               </Link>
               <div className='navbar-item'>
-                <figure className='image is-48x48'>
+                <figure className={`image ${figure}`}>
                   <img
                     src={user.photoURL}
                     alt=''
