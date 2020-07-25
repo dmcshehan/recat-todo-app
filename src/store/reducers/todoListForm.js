@@ -15,6 +15,8 @@ export default (state = initialState, action) =>
     switch (type) {
       case HIDE_TODO_LIST_FORM:
         draftState.showTodoListForm = false;
+        break;
+
       case SHOW_TODO_LIST_FORM:
         draftState.showTodoListForm = true;
         break;

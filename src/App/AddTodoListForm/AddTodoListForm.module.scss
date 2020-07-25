@@ -1,12 +1,17 @@
 .inputField {
-  outline: none;
-  padding-bottom: 3px;
+  outline: none !important;
   border: none;
   background-color: #f5f5fa;
-  margin-top: 10px;
-  font-size: 1em;
-  border-bottom: 1px solid rgba(0, 0, 0, 0.3);
+  font-size: 1em !important;
   width: 100%;
+  margin-right: 10px;
+}
+
+.form {
+  display: flex;
+  padding-top: 10px;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.3);
+  padding-bottom: 10px;
 }
 
 .hide {

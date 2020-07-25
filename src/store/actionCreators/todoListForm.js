@@ -4,11 +4,15 @@ import {
 } from "../actionTypes/todoListForm";
 
 function showTodoListForm() {
-  return (dispatch, getState) => {
-    dispatch({
-      type: SHOW_TODO_LIST_FORM,
-    });
+  return {
+    type: SHOW_TODO_LIST_FORM,
   };
 }
 
-export { showTodoListForm };
+function hideTodoListForm() {
+  return {
+    type: HIDE_TODO_LIST_FORM,
+  };
+}
+
+export { showTodoListForm, hideTodoListForm };
