@@ -1,8 +1,11 @@
 import React, { useEffect } from "react";
+import { useSelector } from "react-redux";
 
-import { inputField } from "./AddTodoListForm.module.scss";
+import { inputField, hide } from "./AddTodoListForm.module.scss";
 
 export default function AddTodoListForm() {
+  const { showTodoListForm } = useSelector((state) => state.todoListForm);
+
   const input = React.createRef();
 
   useEffect(() => {
@@ -10,7 +13,7 @@ export default function AddTodoListForm() {
   });
 
   return (
-    <div>
+    <div className={!showTodoListForm ? hide : null}>
       <input type='text' ref={input} className={inputField} />
     </div>
   );

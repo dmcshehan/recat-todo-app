@@ -1,9 +1,14 @@
 import React from "react";
+import { useDispatch } from "react-redux";
 import { buttonPositioner, btn } from "./AddTodoListButton.module.scss";
 
+import { showTodoListForm } from "../../store/actionCreators/todoListForm";
+
 export default function AddTodoListButton() {
+  const dispatch = useDispatch();
+
   function handleClick() {
-    console.log("Add todo");
+    dispatch(showTodoListForm());
   }
   return (
     <div className={buttonPositioner}>

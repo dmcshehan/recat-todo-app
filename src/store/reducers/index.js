@@ -7,11 +7,12 @@ import userReducer from "./user";
 import dropdownReducer from "./dropdown";
 import notificationReducer from "./notification";
 import todoListReducer from "./todoList";
+import todoListFormReducer from "./todoListForm";
 
 const persistConfig = {
   key: "root",
   storage,
-  blacklist: ["dropDown"],
+  blacklist: ["dropDown", "todoListForm"],
 };
 
 const rootReducer = combineReducers({
@@ -19,6 +20,7 @@ const rootReducer = combineReducers({
   dropDown: dropdownReducer,
   notification: notificationReducer,
   todoList: todoListReducer,
+  todoListForm: todoListFormReducer,
 });
 
 export default persistReducer(persistConfig, rootReducer);
