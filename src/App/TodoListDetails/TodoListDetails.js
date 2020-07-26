@@ -3,6 +3,7 @@ import React from "react";
 import { details, info } from "./TodoListDetails.module.scss";
 import TodoListDetailsHeader from "../TodoListDetailsHeader/TodoListDetailsHeader";
 import AddTodoForm from "../AddTodoForm/AddTodoForm";
+import Todos from "../Todos/Todos";
 
 export default function TodoListDetails() {
   return (
@@ -10,6 +11,7 @@ export default function TodoListDetails() {
       <div className={`${info}`}>
         <TodoListDetailsHeader />
         <AddTodoForm />
+        <Todos />
       </div>
     </div>
   );
