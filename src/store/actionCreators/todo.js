@@ -25,12 +25,12 @@ function fetchTodos(_id) {
   };
 }
 
-function addTodo(todo) {
+function addTodo(title) {
   return (dispatch, getState) => {
     const { _id } = getState().todoList.selected;
 
     const completeTodo = {
-      todo,
+      title,
       todoListId: _id,
     };
 

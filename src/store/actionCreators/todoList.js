@@ -5,6 +5,7 @@ import {
 } from "../actionTypes/todoList";
 
 import { hideTodoListForm } from "./todoListForm";
+import { fetchTodos } from "../actionCreators/todo";
 
 function fetchTodoListsSuccess(todoLists) {
   return {
@@ -64,6 +65,7 @@ function selectTodoList(listId) {
     const selectedList = todoLists.find((list) => list._id === listId);
 
     dispatch(onSelectTodoList(selectedList));
+    dispatch(fetchTodos(listId));
   };
 }
 
