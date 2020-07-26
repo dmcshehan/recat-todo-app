@@ -1,5 +1,8 @@
 import { db } from "../../auth/firebase";
-import { FETCH_TODO_LISTS_SUCCESS } from "../actionTypes/todoList";
+import {
+  FETCH_TODO_LISTS_SUCCESS,
+  SELECT_TODO_LIST,
+} from "../actionTypes/todoList";
 
 import { hideTodoListForm } from "./todoListForm";
 
@@ -46,4 +49,22 @@ function addTodoList(title) {
   };
 }
 
-export { fetchTodoLists, addTodoList };
+function onSelectTodoList(todoList) {
+  return {
+    type: SELECT_TODO_LIST,
+    payload: {
+      todoList,
+    },
+  };
+}
+
+function selectTodoList(listId) {
+  return (dispatch, getState) => {
+    const { todoLists } = getState().todoList;
+    const selectedList = todoLists.find((list) => list._id === listId);
+
+    dispatch(onSelectTodoList(selectedList));
+  };
+}
+
+export { fetchTodoLists, addTodoList, selectTodoList };
