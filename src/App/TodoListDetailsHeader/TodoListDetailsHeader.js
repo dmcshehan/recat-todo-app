@@ -1,11 +1,11 @@
 import React from "react";
 
-import { details, info, header } from "./TodoListDetailsHeader.module.scss";
+import { header, heading } from "./TodoListDetailsHeader.module.scss";
 
 export default function TodoListDetails({ title }) {
   return (
     <header className={header}>
-      <div className='title is-5'>{title}</div>
+      <p className={heading}>{title}</p>
       <input type='date' />
     </header>
   );

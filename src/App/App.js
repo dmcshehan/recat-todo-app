@@ -9,7 +9,6 @@ import { userLoginSuccess } from "../store/actionCreators/user";
 import { closeDropdown } from "../store/actionCreators/dropdown";
 
 //Components
-import FullScreenContainer from "./FullScreenContainer/FullScreenContainer";
 import DropDown from "./Dropdown/Dropdown";
 import Dashboard from "./Dashboard/Dashboard";
 import Navbar from "./Navbar/Navbar";

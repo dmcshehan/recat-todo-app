@@ -1,6 +1,5 @@
-.header {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  width: 100%;
+.wrap {
+  position: relative;
+  overflow-y: scroll;
+  height: calc(100vh - 200px);
 }

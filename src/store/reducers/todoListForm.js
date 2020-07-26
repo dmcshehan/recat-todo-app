@@ -10,7 +10,7 @@ const initialState = {
 
 export default (state = initialState, action) =>
   produce(state, (draftState) => {
-    const { type, payload } = action;
+    const { type } = action;
 
     switch (type) {
       case HIDE_TODO_LIST_FORM:

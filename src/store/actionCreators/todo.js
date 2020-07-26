@@ -38,12 +38,26 @@ function addTodo(title) {
       todoListId: _id,
     };
 
+    return new Promise(function (resolve, reject) {
+      db.collection("todos")
+        .add(completeTodo)
+        .then(function (docRef) {
+          resolve(docRef.id);
+          console.log("Document written with ID: ", docRef.id);
+        });
+    });
+  };
+}
+
+function updateTodo(_id, mergeObject) {
+  return (dispatch, getState) => {
     db.collection("todos")
-      .add(completeTodo)
+      .doc(_id)
+      .update(mergeObject)
       .then(function (docRef) {
-        console.log("Document written with ID: ", docRef.id);
+        console.log("Document successfully updated!");
       });
   };
 }
 
-export { fetchTodos, addTodo };
+export { fetchTodos, addTodo, updateTodo };

@@ -2,9 +2,10 @@ import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchTodos } from "../../store/actionCreators/todo";
 
+import { wrap } from "./Todos.module.scss";
+
 import Todo from "../Todo/Todo";
-import CompletedTodos from "../CompletedTodos/CompletedTodos";
-import IncompleteTodos from "../IncompleteTodos/IncompleteTodos";
+import AddTodoButton from "../AddTodoButton/AddTodoButton";
 
 export default function Todos() {
   const dispatch = useDispatch();
@@ -30,9 +31,9 @@ export default function Todos() {
   const todoItems = todos.map((todo) => <Todo key={todo._id} {...todo} />);
 
   return (
-    <div className='columns'>
-      <IncompleteTodos todos={todos} />
-      <CompletedTodos todos={todos} />
+    <div>
+      {todoItems}
+      <AddTodoButton />
     </div>
   );
 }

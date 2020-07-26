@@ -1,4 +1,22 @@
 .todo {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
   cursor: pointer;
   padding: 10px 0;
+
+  border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+}
+.wrap {
+  display: flex;
+  align-items: center;
+}
+
+.checkbox {
+  margin-right: 10px;
+  padding: 15px;
+  transform: scale(1.5);
+}
+.button {
+  margin-bottom: 0 !important;
 }

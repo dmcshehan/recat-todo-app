@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 
 import { addTodo } from "../../store/actionCreators/todo";
 
@@ -13,7 +13,9 @@ export default function AddTodoForm() {
 
   function handleSubmit(e) {
     e.preventDefault();
-    dispatch(addTodo(todo));
+    dispatch(addTodo(todo)).then(function () {
+      setTodo("");
+    });
   }
 
   return (
