@@ -12,16 +12,19 @@ function fetchTodosSuccess(todos) {
 
 function fetchTodos(_id) {
   return (dispatch, getState) => {
-    db.collection("todos")
-      .where("todoListId", "==", _id)
-      .onSnapshot(function (querySnapshot) {
-        const todos = [];
-        querySnapshot.forEach(function (doc) {
-          todos.push({ ...doc.data(), _id: doc.id });
-        });
+    return new Promise(function (resolve, reject) {
+      db.collection("todos")
+        .where("todoListId", "==", _id)
+        .onSnapshot(function (querySnapshot) {
+          const todos = [];
+          querySnapshot.forEach(function (doc) {
+            todos.push({ ...doc.data(), _id: doc.id });
+          });
 
-        dispatch(fetchTodosSuccess(todos));
-      });
+          resolve(todos);
+          dispatch(fetchTodosSuccess(todos));
+        });
+    });
   };
 }
 
@@ -31,6 +34,7 @@ function addTodo(title) {
 
     const completeTodo = {
       title,
+      isComplete: false,
       todoListId: _id,
     };
 

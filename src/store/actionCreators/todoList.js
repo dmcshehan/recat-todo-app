@@ -20,17 +20,18 @@ function fetchTodoLists() {
   return (dispatch, getState) => {
     const { uid } = getState().user.user;
 
-    db.collection("todoLists")
-      .where("uid", "==", uid)
-      .onSnapshot(function (querySnapshot) {
-        const todoLists = [];
-        querySnapshot.forEach(function (doc) {
-          todoLists.push({ ...doc.data(), _id: doc.id });
+    return new Promise(function (resolve, reject) {
+      db.collection("todoLists")
+        .where("uid", "==", uid)
+        .onSnapshot(function (querySnapshot) {
+          const todoLists = [];
+          querySnapshot.forEach(function (doc) {
+            todoLists.push({ ...doc.data(), _id: doc.id });
+          });
+          resolve(todoLists);
+          dispatch(fetchTodoListsSuccess(todoLists));
         });
-
-        console.log("fired Again");
-        dispatch(fetchTodoListsSuccess(todoLists));
-      });
+    });
   };
 }
 

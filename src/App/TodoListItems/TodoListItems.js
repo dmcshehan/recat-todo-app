@@ -10,7 +10,11 @@ export default function TodoListItems() {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    dispatch(fetchTodoLists());
+    const unsubscribe = dispatch(fetchTodoLists());
+
+    return function () {
+      unsubscribe();
+    };
   }, []);
 
   const todoListItems = todoLists.map((todoList) => (
