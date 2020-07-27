@@ -10,6 +10,7 @@ import todoListReducer from "./todoList";
 import todoListFormReducer from "./todoListForm";
 import todoReducer from "./todo";
 import todoFormReducer from "./todoForm";
+import dailyTodoReducer from "./dailyTodo";
 
 const persistConfig = {
   key: "root",
@@ -25,6 +26,7 @@ const rootReducer = combineReducers({
   todoListForm: todoListFormReducer,
   todoForm: todoFormReducer,
   todo: todoReducer,
+  dailyTodo: dailyTodoReducer,
 });
 
 export default persistReducer(persistConfig, rootReducer);

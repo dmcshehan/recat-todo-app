@@ -1,7 +1,7 @@
 @import url("https://fonts.googleapis.com/css?family=Google+Sans:100,300,400,500,700,900,100i,300i,400i,500i,700i,900i");
 @import "~bulma/bulma.sass";
 
-//@import "../../node_modules/bulma-calendar/dist/css/bulma-calendar.min.css";
+@import "../node_modules/react-datepicker/dist/react-datepicker.min.css";
 
 * {
   font-family: "Google Sans", sans-serif;
@@ -10,4 +10,12 @@
 ::-webkit-scrollbar {
   width: 0px;
   background: transparent; /* make scrollbar transparent */
+}
+
+.react-datepicker-popper {
+  transform: translate3d(1345px, 50px, 0px) !important;
+
+  .react-datepicker__triangle {
+    left: 210px !important;
+  }
 }

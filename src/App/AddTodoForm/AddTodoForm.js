@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
+import moment from "moment";
 
 import { addTodo } from "../../store/actionCreators/todo";
 
@@ -26,9 +27,18 @@ export default function AddTodoForm() {
     setIsComplete(!isComplete);
   }
 
+  function createTodo(title, isComplete) {
+    const dateTime = moment().format("YYYY-MM-DDThh:mm:ssZ");
+    return {
+      title,
+      isComplete,
+      dateTime,
+    };
+  }
+
   function handleSubmit(e) {
     e.preventDefault();
-    dispatch(addTodo({ title, isComplete })).then(function () {
+    dispatch(addTodo(createTodo(title, isComplete))).then(function () {
       setTitle("");
       setIsComplete(false);
     });
@@ -36,7 +46,7 @@ export default function AddTodoForm() {
 
   function backgroundClick() {
     if (title) {
-      dispatch(addTodo({ title, isComplete })).then(function () {
+      dispatch(addTodo(createTodo(title, isComplete))).then(function () {
         setTitle("");
         setIsComplete(false);
       });

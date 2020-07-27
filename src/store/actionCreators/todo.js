@@ -13,21 +13,22 @@ function fetchTodosSuccess(todos) {
 
 function fetchTodos(_id) {
   return (dispatch, getState) => {
-    return new Promise(function (resolve, reject) {
-      db.collection("todos")
-        .where("todoListId", "==", _id)
-        .onSnapshot(function (querySnapshot) {
-          const todos = [];
-          querySnapshot.forEach(function (doc) {
-            todos.push({ ...doc.data(), _id: doc.id });
-          });
+    const query = db.collection("todos").where("todoListId", "==", _id);
 
-          resolve(todos);
-          dispatch(fetchTodosSuccess(todos));
-        });
+    const unsubscribe = query.onSnapshot(function (querySnapshot) {
+      const todos = [];
+      querySnapshot.forEach(function (doc) {
+        todos.push({ ...doc.data(), _id: doc.id });
+      });
+
+      dispatch(fetchTodosSuccess(todos));
     });
+
+    return unsubscribe;
   };
 }
+
+function fetchTodosBydate() {}
 
 function addTodo(todo) {
   return (dispatch, getState) => {

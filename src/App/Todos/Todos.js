@@ -22,8 +22,10 @@ export default function Todos() {
         (list) => list.title === "Daily Todos"
       );
 
-      unsubscribe = dispatch(fetchTodos(dailyTodosList._id));
-      dispatch(selectTodoList(dailyTodosList._id));
+      if (dailyTodosList) {
+        unsubscribe = dispatch(fetchTodos(dailyTodosList._id));
+        dispatch(selectTodoList(dailyTodosList._id));
+      }
     }
 
     return function () {
