@@ -9,11 +9,12 @@ import notificationReducer from "./notification";
 import todoListReducer from "./todoList";
 import todoListFormReducer from "./todoListForm";
 import todoReducer from "./todo";
+import todoFormReducer from "./todoForm";
 
 const persistConfig = {
   key: "root",
   storage,
-  blacklist: ["dropDown", "todoListForm"],
+  blacklist: ["dropDown", "todoListForm", "todoForm"],
 };
 
 const rootReducer = combineReducers({
@@ -22,6 +23,7 @@ const rootReducer = combineReducers({
   notification: notificationReducer,
   todoList: todoListReducer,
   todoListForm: todoListFormReducer,
+  todoForm: todoFormReducer,
   todo: todoReducer,
 });
 

@@ -7,6 +7,8 @@ import { Route, Switch, BrowserRouter } from "react-router-dom";
 
 import { userLoginSuccess } from "../store/actionCreators/user";
 import { closeDropdown } from "../store/actionCreators/dropdown";
+import { hideTodoForm } from "../store/actionCreators/todoForm";
+import { hideTodoListForm } from "../store/actionCreators/todoListForm";
 
 //Components
 import DropDown from "./Dropdown/Dropdown";
@@ -24,6 +26,8 @@ import isLoggedIn from "../hooks/useIsLoggedIn";
 
 export default function App() {
   const { isDropdownOpen } = useSelector((state) => state.dropDown);
+  const { showTodoListForm } = useSelector((state) => state.todoListForm);
+  const { showTodoForm } = useSelector((state) => state.todoForm);
   const isUserLoggedIn = isLoggedIn();
 
   const dispatch = useDispatch();

@@ -12,10 +12,7 @@ export default function AddTodoListButton() {
   }
   return (
     <div className={buttonPositioner}>
-      <button
-        className={`button is-white is-fullwidth ${btn}`}
-        onClick={handleClick}
-      >
+      <button className={`button is-fullwidth ${btn}`} onClick={handleClick}>
         <span className='icon'>
           <i className='fas fa-plus-circle'></i>
         </span>

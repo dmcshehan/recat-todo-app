@@ -1,6 +1,7 @@
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchTodos } from "../../store/actionCreators/todo";
+import { selectTodoList } from "../../store/actionCreators/todoList";
 
 import { wrap } from "./Todos.module.scss";
 
@@ -20,7 +21,9 @@ export default function Todos() {
       const dailyTodosList = todoLists.find(
         (list) => list.title === "Daily Todos"
       );
+
       unsubscribe = dispatch(fetchTodos(dailyTodosList._id));
+      dispatch(selectTodoList(dailyTodosList._id));
     }
 
     return function () {

@@ -1,5 +1,13 @@
 .todoListItem {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
   cursor: pointer;
-  padding: 15px 0;
+  padding: 10px 0;
   border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+}
+
+.button {
+  margin-bottom: 0 !important;
 }

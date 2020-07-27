@@ -1,33 +1,72 @@
-import React, { useState } from "react";
-import { useDispatch } from "react-redux";
+import React, { useState, useEffect } from "react";
+import { useSelector, useDispatch } from "react-redux";
 
 import { addTodo } from "../../store/actionCreators/todo";
 
+import { form, inputField, check, hide } from "./AddTodoForm.module.scss";
+
 export default function AddTodoForm() {
   const dispatch = useDispatch();
-  const [todo, setTodo] = useState("");
+  const { showTodoForm } = useSelector((state) => state.todoForm);
+
+  const input = React.createRef();
+
+  const [title, setTitle] = useState("");
+  const [isComplete, setIsComplete] = useState(false);
+
+  useEffect(() => {
+    input.current.focus();
+  });
 
   function handleChange(e) {
-    setTodo(e.target.value);
+    setTitle(e.target.value);
+  }
+
+  function handleCheck() {
+    setIsComplete(!isComplete);
   }
 
   function handleSubmit(e) {
     e.preventDefault();
-    dispatch(addTodo(todo)).then(function () {
-      setTodo("");
+    dispatch(addTodo({ title, isComplete })).then(function () {
+      setTitle("");
+      setIsComplete(false);
     });
   }
 
+  function backgroundClick() {
+    if (title) {
+      dispatch(addTodo({ title, isComplete })).then(function () {
+        setTitle("");
+        setIsComplete(false);
+      });
+    }
+  }
+
   return (
-    <div>
-      <form onSubmit={handleSubmit}>
+    <div className={!showTodoForm ? hide : null}>
+      <form className={form} onSubmit={handleSubmit}>
         <input
+          type='checkbox'
+          className={check}
+          checked={isComplete}
+          onChange={handleCheck}
+        />
+        <input
+          ref={input}
           type='text'
-          value={todo}
+          value={title}
           onChange={handleChange}
           placeholder='Todo Title'
+          className={`${inputField} is-small`}
+          onBlur={backgroundClick}
         />
-        <button>Add Todo</button>
+        <button
+          className={`button is-small is-outlined`}
+          disabled={title.length === 0}
+        >
+          Add Todo
+        </button>
       </form>
     </div>
   );

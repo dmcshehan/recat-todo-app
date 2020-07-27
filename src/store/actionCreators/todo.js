@@ -1,5 +1,6 @@
 import { db } from "../../auth/firebase";
 import { FETCH_TODOS_SUCCESS } from "../actionTypes/todo";
+import { hideTodoForm } from "./todoForm";
 
 function fetchTodosSuccess(todos) {
   return {
@@ -28,13 +29,12 @@ function fetchTodos(_id) {
   };
 }
 
-function addTodo(title) {
+function addTodo(todo) {
   return (dispatch, getState) => {
     const { _id } = getState().todoList.selected;
 
     const completeTodo = {
-      title,
-      isComplete: false,
+      ...todo,
       todoListId: _id,
     };
 
@@ -43,6 +43,7 @@ function addTodo(title) {
         .add(completeTodo)
         .then(function (docRef) {
           resolve(docRef.id);
+          dispatch(hideTodoForm());
           console.log("Document written with ID: ", docRef.id);
         });
     });
@@ -60,4 +61,15 @@ function updateTodo(_id, mergeObject) {
   };
 }
 
-export { fetchTodos, addTodo, updateTodo };
+function deleteTodo(_id) {
+  return (dispatch, getState) => {
+    db.collection("todos")
+      .doc(_id)
+      .delete()
+      .then(function () {
+        console.log("Document successfully deleted!");
+      });
+  };
+}
+
+export { fetchTodos, addTodo, updateTodo, deleteTodo };
