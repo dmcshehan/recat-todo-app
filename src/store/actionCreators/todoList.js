@@ -6,6 +6,7 @@ import {
 
 import { hideTodoListForm } from "./todoListForm";
 import { fetchTodos } from "../actionCreators/todo";
+import { fetchDailyTodosBydate } from "../actionCreators/dailyTodo";
 
 function fetchTodoListsSuccess(todoLists) {
   return {
@@ -76,7 +77,11 @@ function selectTodoList(listId) {
     const selectedList = todoLists.find((list) => list._id === listId);
 
     dispatch(onSelectTodoList(selectedList));
-    dispatch(fetchTodos(selectedList));
+    if (selectedList.title === "Daily Todos") {
+      dispatch(fetchDailyTodosBydate());
+    } else {
+      dispatch(fetchTodos(selectedList));
+    }
   };
 }
 

@@ -27,6 +27,8 @@ function fetchDailyTodosBydate() {
     const { _id } = daily;
     const { selectedDate } = getState().dailyTodo;
 
+    console.log("--->", selectedDate);
+
     let query = db.collection("todos").where("todoListId", "==", _id);
     query = query.where("dateTime", ">", new Date(selectedDate));
 
