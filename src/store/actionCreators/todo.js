@@ -11,8 +11,9 @@ function fetchTodosSuccess(todos) {
   };
 }
 
-function fetchTodos(_id) {
+function fetchTodos(selected) {
   return (dispatch, getState) => {
+    const { _id } = selected;
     const query = db.collection("todos").where("todoListId", "==", _id);
 
     const unsubscribe = query.onSnapshot(function (querySnapshot) {
@@ -28,16 +29,23 @@ function fetchTodos(_id) {
   };
 }
 
-function fetchTodosBydate() {}
-
 function addTodo(todo) {
   return (dispatch, getState) => {
-    const { _id } = getState().todoList.selected;
+    const { _id, title } = getState().todoList.selected;
+    const { selectedDate } = getState().dailyTodo;
 
-    const completeTodo = {
+    let completeTodo = {
       ...todo,
       todoListId: _id,
     };
+
+    if (title === "Daily Todos") {
+      completeTodo.dateTime = new Date(selectedDate);
+    } else {
+      completeTodo.dateTime = new Date();
+    }
+
+    console.log(completeTodo);
 
     return new Promise(function (resolve, reject) {
       db.collection("todos")
@@ -73,4 +81,4 @@ function deleteTodo(_id) {
   };
 }
 
-export { fetchTodos, addTodo, updateTodo, deleteTodo };
+export { fetchTodos, addTodo, updateTodo, deleteTodo, fetchTodosSuccess };

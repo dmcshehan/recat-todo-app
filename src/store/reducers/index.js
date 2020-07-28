@@ -15,7 +15,7 @@ import dailyTodoReducer from "./dailyTodo";
 const persistConfig = {
   key: "root",
   storage,
-  blacklist: ["dropDown", "todoListForm", "todoForm"],
+  blacklist: ["dropDown", "todoListForm", "todoForm", "dailyTodo"],
 };
 
 const rootReducer = combineReducers({

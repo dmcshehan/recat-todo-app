@@ -24,6 +24,7 @@ function fetchTodoLists() {
 
     const unsubscribe = query.onSnapshot(function (querySnapshot) {
       const todoLists = [];
+
       querySnapshot.forEach(function (doc) {
         todoLists.push({ ...doc.data(), _id: doc.id });
       });
@@ -75,7 +76,7 @@ function selectTodoList(listId) {
     const selectedList = todoLists.find((list) => list._id === listId);
 
     dispatch(onSelectTodoList(selectedList));
-    dispatch(fetchTodos(listId));
+    dispatch(fetchTodos(selectedList));
   };
 }
 
