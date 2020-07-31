@@ -1,5 +1,5 @@
 import React, { useEffect } from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 
 import TodoListItems from "../TodoListItems/TodoListItems";
 import AddTodoListButton from "../AddTodoListButton/AddTodoListButton";
@@ -7,10 +7,11 @@ import AddTodoListForm from "../AddTodoListForm/AddTodoListForm";
 
 import { fetchTodoLists } from "../../store/actionCreators/todoList";
 
-import { list } from "./TodoLists.module.scss";
+import { list, open, close } from "./TodoLists.module.scss";
 
 export default function TodoList() {
   const dispatch = useDispatch();
+  const { screenSize, isMobileTodoListOpen } = useSelector((state) => state.ui);
 
   useEffect(() => {
     const unsubscribe = dispatch(fetchTodoLists());
@@ -21,7 +22,15 @@ export default function TodoList() {
   }, []);
 
   return (
-    <div className={`column is-2 ${list}`}>
+    <div
+      className={`column is-one-fifth-desktop ${list} ${
+        screenSize === "mobile" || screenSize === "tablet"
+          ? isMobileTodoListOpen
+            ? open
+            : close
+          : open
+      }`}
+    >
       <div>
         <TodoListItems />
         <AddTodoListForm />

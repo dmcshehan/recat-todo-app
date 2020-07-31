@@ -7,6 +7,12 @@ import {
 import { hideTodoListForm } from "./todoListForm";
 import { fetchTodos } from "../actionCreators/todo";
 import { fetchDailyTodosBydate } from "../actionCreators/dailyTodo";
+import { changeMobileTodoListStatus } from "./ui";
+
+import {
+  displaySuccessNotification,
+  displayErrorNotification,
+} from "./notification";
 
 function fetchTodoListsSuccess(todoLists) {
   return {
@@ -56,8 +62,11 @@ function addTodoList(title) {
         uid,
       })
       .then(function (docRef) {
-        console.log("Document written with ID: ", docRef.id);
+        dispatch(displaySuccessNotification("TodoList successfully added!"));
         dispatch(hideTodoListForm());
+      })
+      .catch(function (error) {
+        dispatch(displayErrorNotification(error.message));
       });
   };
 }
@@ -75,8 +84,14 @@ function selectTodoList(listId) {
   return (dispatch, getState) => {
     const { todoLists } = getState().todoList;
     const selectedList = todoLists.find((list) => list._id === listId);
+    const { isMobileTodoListOpen } = getState().ui;
 
     dispatch(onSelectTodoList(selectedList));
+
+    if (isMobileTodoListOpen) {
+      dispatch(changeMobileTodoListStatus(false));
+    }
+
     if (selectedList.title === "Daily Todos") {
       dispatch(fetchDailyTodosBydate());
     } else {
@@ -105,7 +120,10 @@ function deleteTodoList(_id) {
           });
       })
       .then(function () {
-        console.log("all done");
+        dispatch(displaySuccessNotification("TodoList successfully deleted!"));
+      })
+      .catch(function (error) {
+        dispatch(displayErrorNotification(error.message));
       });
   };
 }

@@ -7,12 +7,14 @@ import { Route, Switch, BrowserRouter } from "react-router-dom";
 
 import { userLoginSuccess } from "../store/actionCreators/user";
 import { closeDropdown } from "../store/actionCreators/dropdown";
+import { changeScreenSize } from "../store/actionCreators/ui";
 
 //Components
 import DropDown from "./Dropdown/Dropdown";
 import Dashboard from "./Dashboard/Dashboard";
 import Navbar from "./Navbar/Navbar";
 import Container from "./Container/Container";
+import Notification from "./Notification/Notification";
 
 //Pages
 import NotFound from "./404/404";
@@ -24,6 +26,7 @@ import isLoggedIn from "../hooks/useIsLoggedIn";
 
 export default function App() {
   const { isDropdownOpen } = useSelector((state) => state.dropDown);
+  const { screenSize } = useSelector((state) => state.ui);
   const isUserLoggedIn = isLoggedIn();
 
   const dispatch = useDispatch();
@@ -33,6 +36,22 @@ export default function App() {
         dispatch(userLoginSuccess(loggedInUser));
       }
     });
+
+    console.log(screenSize);
+
+    function handleResize() {
+      const { innerWidth } = window;
+      if (innerWidth <= 768) {
+        dispatch(changeScreenSize("mobile"));
+      } else if (innerWidth >= 769 && innerWidth <= 1023) {
+        dispatch(changeScreenSize("tablet"));
+      } else {
+        if (screenSize !== "desktop") {
+          return dispatch(changeScreenSize("desktop"));
+        }
+      }
+    }
+    handleResize();
   }, [isUserLoggedIn]);
 
   function handleBackgroundClick() {
@@ -55,6 +74,7 @@ export default function App() {
               <Route path='/' component={NotFound} />
             </Switch>
           </Container>
+          <Notification />
         </div>
       </BrowserRouter>
     </React.StrictMode>

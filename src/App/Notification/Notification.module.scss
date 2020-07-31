@@ -1,0 +1,11 @@
+.notification {
+  position: fixed !important;
+  bottom: 0;
+  right: 0.75rem;
+  bottom: 0.75rem;
+  width: 100%;
+
+  @media screen and (min-width: 1024px) {
+    width: 30%;
+  }
+}

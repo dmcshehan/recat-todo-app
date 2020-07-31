@@ -17,3 +17,22 @@
     left: 210px !important;
   }
 }
+
+#navMenu {
+  display: block !important;
+  box-shadow: none;
+  flex: 1 !important;
+  padding: 0 !important;
+}
+
+.navbar-end {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  max-height: 51px !important;
+}
+
+.navbar {
+  display: flex;
+  align-items: center;
+}

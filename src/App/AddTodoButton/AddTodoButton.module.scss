@@ -3,7 +3,11 @@
   bottom: 0;
   width: 100%;
   right: 0;
-  left: 16.66%;
+  left: 0;
+
+  @media screen and (min-width: 1023px) {
+    left: 20%;
+  }
 }
 
 .btn {

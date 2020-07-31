@@ -27,10 +27,15 @@ function fetchDailyTodosBydate() {
     const { _id } = daily;
     const { selectedDate } = getState().dailyTodo;
 
-    console.log("--->", selectedDate);
+    const beginingOfTheSelectedDate = moment(selectedDate)
+      .startOf("day")
+      .toString();
+    const endOfTheSelectedDate = moment(selectedDate).endOf("day").toString();
 
+    //  00:00:00 included
     let query = db.collection("todos").where("todoListId", "==", _id);
-    query = query.where("dateTime", ">", new Date(selectedDate));
+    query = query.where("dateTime", ">=", new Date(beginingOfTheSelectedDate));
+    query = query.where("dateTime", "<=", new Date(endOfTheSelectedDate));
 
     const unsubscribe = query.onSnapshot(function (querySnapshot) {
       const todos = [];
@@ -40,8 +45,6 @@ function fetchDailyTodosBydate() {
           _id: doc.id,
         });
       });
-
-      console.log(todos);
 
       dispatch(fetchTodosSuccess(todos));
     });

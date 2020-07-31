@@ -2,6 +2,12 @@ import { db } from "../../auth/firebase";
 import { FETCH_TODOS_SUCCESS } from "../actionTypes/todo";
 import { hideTodoForm } from "./todoForm";
 
+import { fetchDailyTodosBydate } from "./dailyTodo";
+import {
+  displaySuccessNotification,
+  displayErrorNotification,
+} from "./notification";
+
 function fetchTodosSuccess(todos) {
   return {
     type: FETCH_TODOS_SUCCESS,
@@ -12,18 +18,24 @@ function fetchTodosSuccess(todos) {
 }
 
 function fetchTodos(selected) {
-  return (dispatch, getState) => {
-    const { _id } = selected;
+  return (dispatch) => {
+    const { _id, title } = selected;
     const query = db.collection("todos").where("todoListId", "==", _id);
 
-    const unsubscribe = query.onSnapshot(function (querySnapshot) {
-      const todos = [];
-      querySnapshot.forEach(function (doc) {
-        todos.push({ ...doc.data(), _id: doc.id });
-      });
+    let unsubscribe;
 
-      dispatch(fetchTodosSuccess(todos));
-    });
+    if (title === "Daily Todos") {
+      unsubscribe = dispatch(fetchDailyTodosBydate());
+    } else {
+      unsubscribe = query.onSnapshot(function (querySnapshot) {
+        const todos = [];
+        querySnapshot.forEach(function (doc) {
+          todos.push({ ...doc.data(), _id: doc.id });
+        });
+
+        dispatch(fetchTodosSuccess(todos));
+      });
+    }
 
     return unsubscribe;
   };
@@ -40,7 +52,7 @@ function addTodo(todo) {
     };
 
     if (title === "Daily Todos") {
-      completeTodo.dateTime = new Date(selectedDate);
+      completeTodo.dateTime = new Date(selectedDate); // 00:00:00
     } else {
       completeTodo.dateTime = new Date();
     }
@@ -52,31 +64,40 @@ function addTodo(todo) {
         .add(completeTodo)
         .then(function (docRef) {
           resolve(docRef.id);
+          dispatch(displaySuccessNotification("Todo successfully added!"));
           dispatch(hideTodoForm());
-          console.log("Document written with ID: ", docRef.id);
+        })
+        .catch(function (error) {
+          dispatch(displayErrorNotification(error.message));
         });
     });
   };
 }
 
 function updateTodo(_id, mergeObject) {
-  return (dispatch, getState) => {
+  return (dispatch) => {
     db.collection("todos")
       .doc(_id)
       .update(mergeObject)
       .then(function (docRef) {
-        console.log("Document successfully updated!");
+        // dispatch(displaySuccessNotification("Todo successfully updated!"));
+      })
+      .catch(function (error) {
+        dispatch(displayErrorNotification(error.message));
       });
   };
 }
 
 function deleteTodo(_id) {
-  return (dispatch, getState) => {
+  return (dispatch) => {
     db.collection("todos")
       .doc(_id)
       .delete()
       .then(function () {
-        console.log("Document successfully deleted!");
+        dispatch(displaySuccessNotification("Todo successfully deleted!"));
+      })
+      .catch(function (error) {
+        dispatch(displayErrorNotification(error.message));
       });
   };
 }
