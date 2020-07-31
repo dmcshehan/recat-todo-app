@@ -8,6 +8,7 @@ import { Route, Switch, BrowserRouter } from "react-router-dom";
 import { userLoginSuccess } from "../store/actionCreators/user";
 import { closeDropdown } from "../store/actionCreators/dropdown";
 import { changeScreenSize } from "../store/actionCreators/ui";
+import { hideTodoListForm } from "../store/actionCreators/todoListForm";
 
 //Components
 import DropDown from "./Dropdown/Dropdown";
@@ -27,6 +28,7 @@ import isLoggedIn from "../hooks/useIsLoggedIn";
 export default function App() {
   const { isDropdownOpen } = useSelector((state) => state.dropDown);
   const { screenSize } = useSelector((state) => state.ui);
+  const { showTodoListForm } = useSelector((state) => state.todoListForm);
   const isUserLoggedIn = isLoggedIn();
 
   const dispatch = useDispatch();
@@ -57,6 +59,9 @@ export default function App() {
   function handleBackgroundClick() {
     if (isDropdownOpen) {
       dispatch(closeDropdown());
+    }
+    if (showTodoListForm) {
+      dispatch(hideTodoListForm());
     }
   }
 

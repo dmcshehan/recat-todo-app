@@ -21,16 +21,8 @@ export default function TodoList() {
     };
   }, []);
 
-  return (
-    <div
-      className={`column is-one-fifth-desktop ${list} ${
-        screenSize === "mobile" || screenSize === "tablet"
-          ? isMobileTodoListOpen
-            ? open
-            : close
-          : open
-      }`}
-    >
+  const comp = (
+    <div className={`column is-one-fifth-desktop ${list}`}>
       <div>
         <TodoListItems />
         <AddTodoListForm />
@@ -38,4 +30,10 @@ export default function TodoList() {
       </div>
     </div>
   );
+
+  return screenSize === "mobile" || screenSize === "tablet"
+    ? isMobileTodoListOpen
+      ? comp
+      : null
+    : comp;
 }

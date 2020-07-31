@@ -4,6 +4,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { inputField, hide, form } from "./AddTodoListForm.module.scss";
 
 import { addTodoList } from "../../store/actionCreators/todoList";
+import { hideTodoListForm } from "../../store/actionCreators/todoListForm";
 
 export default function AddTodoListForm() {
   const [todoList, setTodoList] = useState("");
