@@ -15,7 +15,7 @@ export default function Todos() {
   const { todos } = useSelector((state) => state.todo);
 
   useEffect(() => {
-    let unsubscribe;
+    let unsubscribe = () => {};
 
     if (selected) {
       unsubscribe = dispatch(fetchTodos(selected));
@@ -31,7 +31,7 @@ export default function Todos() {
     return function () {
       unsubscribe();
     };
-  }, []);
+  }, [todoLists]);
 
   const todoItems = todos.map((todo) => <Todo key={todo._id} {...todo} />);
 
