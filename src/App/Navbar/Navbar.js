@@ -6,13 +6,14 @@ import {
   openDropdown,
   closeDropdown,
 } from "../../store/actionCreators/dropdown";
+import { changeMobileTodoListStatus } from "../../store/actionCreators/ui";
 
 import { imgBtn, border, navBar, figure } from "./Navbar.module.scss";
 
 export default function NavBar() {
   const dispatch = useDispatch();
   const { user } = useSelector((state) => state.user);
-
+  const { isMobileTodoListOpen } = useSelector((state) => state.ui);
   const { isDropdownOpen } = useSelector((state) => state.dropDown);
 
   function toggleDropdown(event) {
@@ -21,6 +22,10 @@ export default function NavBar() {
       return dispatch(closeDropdown());
     }
     dispatch(openDropdown());
+  }
+
+  function handleHamburger() {
+    dispatch(changeMobileTodoListStatus());
   }
 
   return (
@@ -34,17 +39,22 @@ export default function NavBar() {
           <h2 className='title is-5'>Todo App</h2>
         </Link>
 
-        <a
-          role='button'
-          className='navbar-burger burger'
-          aria-label='menu'
-          aria-expanded='false'
-          data-target='navMenu'
-        >
-          <span aria-hidden='true'></span>
-          <span aria-hidden='true'></span>
-          <span aria-hidden='true'></span>
-        </a>
+        {user ? (
+          <a
+            role='button'
+            className={`navbar-burger burger ${
+              isMobileTodoListOpen ? "is-active" : ""
+            }`}
+            aria-label='menu'
+            aria-expanded='false'
+            data-target='navMenu'
+            onClick={handleHamburger}
+          >
+            <span aria-hidden='true'></span>
+            <span aria-hidden='true'></span>
+            <span aria-hidden='true'></span>
+          </a>
+        ) : null}
       </div>
 
       <div id='navMenu' className='navbar-menu'>
@@ -67,7 +77,7 @@ export default function NavBar() {
             </>
           ) : (
             <div className='navbar-item'>
-              <Link to='/signin' className='button is-primary'>
+              <Link to='/signin' className='button is-primary is-rounded'>
                 Login
               </Link>
             </div>

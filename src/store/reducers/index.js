@@ -11,11 +11,12 @@ import todoListFormReducer from "./todoListForm";
 import todoReducer from "./todo";
 import todoFormReducer from "./todoForm";
 import dailyTodoReducer from "./dailyTodo";
+import uiReduer from "./ui";
 
 const persistConfig = {
   key: "root",
   storage,
-  blacklist: ["dropDown", "todoListForm", "todoForm"],
+  blacklist: ["dropDown", "todoListForm", "todoForm", "dailyTodo", "ui"],
 };
 
 const rootReducer = combineReducers({
@@ -27,6 +28,7 @@ const rootReducer = combineReducers({
   todoForm: todoFormReducer,
   todo: todoReducer,
   dailyTodo: dailyTodoReducer,
+  ui: uiReduer,
 });
 
 export default persistReducer(persistConfig, rootReducer);

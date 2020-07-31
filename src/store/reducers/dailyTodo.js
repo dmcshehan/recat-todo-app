@@ -4,7 +4,7 @@ import moment from "moment";
 import { SET_SELECTED_DATE } from "../actionTypes/dailyTodo";
 
 const initialState = {
-  selectedDate: moment().format("YYYY-MM-DDT00:00:00Z"),
+  selectedDate: new Date(moment(new Date()).startOf("day").toString()),
 };
 
 export default (state = initialState, action) =>

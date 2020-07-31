@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import moment from "moment";
 
 import { addTodo } from "../../store/actionCreators/todo";
 
@@ -28,7 +27,7 @@ export default function AddTodoForm() {
   }
 
   function createTodo(title, isComplete) {
-    const dateTime = moment().format("YYYY-MM-DDThh:mm:ssZ");
+    const dateTime = new Date();
     return {
       title,
       isComplete,
@@ -42,15 +41,6 @@ export default function AddTodoForm() {
       setTitle("");
       setIsComplete(false);
     });
-  }
-
-  function backgroundClick() {
-    if (title) {
-      dispatch(addTodo(createTodo(title, isComplete))).then(function () {
-        setTitle("");
-        setIsComplete(false);
-      });
-    }
   }
 
   return (
@@ -69,7 +59,6 @@ export default function AddTodoForm() {
           onChange={handleChange}
           placeholder='Todo Title'
           className={`${inputField} is-small`}
-          onBlur={backgroundClick}
         />
         <button
           className={`button is-small is-outlined`}

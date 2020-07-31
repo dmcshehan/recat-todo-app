@@ -2,8 +2,9 @@ import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchTodos } from "../../store/actionCreators/todo";
 import { selectTodoList } from "../../store/actionCreators/todoList";
+import { fetchDailyTodosBydate } from "../../store/actionCreators/dailyTodo";
 
-import { wrap } from "./Todos.module.scss";
+import getDailyTodoInstance from "../../helpers/getDailyTodoInstance";
 
 import Todo from "../Todo/Todo";
 import AddTodoButton from "../AddTodoButton/AddTodoButton";
@@ -15,16 +16,15 @@ export default function Todos() {
 
   useEffect(() => {
     let unsubscribe;
+
     if (selected) {
-      unsubscribe = dispatch(fetchTodos(selected._id));
+      unsubscribe = dispatch(fetchTodos(selected));
     } else {
-      const dailyTodosList = todoLists.find(
-        (list) => list.title === "Daily Todos"
-      );
+      const dailyTodosList = getDailyTodoInstance(todoLists);
 
       if (dailyTodosList) {
-        unsubscribe = dispatch(fetchTodos(dailyTodosList._id));
         dispatch(selectTodoList(dailyTodosList._id));
+        unsubscribe = dispatch(fetchDailyTodosBydate());
       }
     }
 

@@ -14,10 +14,6 @@ export default function TodoListItem({ title, _id }) {
     dispatch(selectTodoList(_id));
   }
 
-  function handleDelete() {
-    dispatch(selectTodoList(_id));
-  }
-
   function handleDelete(e) {
     e.stopPropagation();
     if (

@@ -1,6 +1,7 @@
 import firebase from "../../auth/firebase";
 
 import * as userActionTypes from "../actionTypes/user";
+import { displayErrorNotification } from "./notification";
 
 function onUserLogoutSuccess() {
   return {
@@ -26,7 +27,7 @@ function logoutUser() {
         dispatch(onUserLogoutSuccess());
       })
       .catch(function (error) {
-        // An error happened.
+        dispatch(displayErrorNotification(error.message));
       });
   };
 }
