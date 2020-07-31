@@ -37,6 +37,8 @@ export default function AddTodoForm() {
 
   function handleSubmit(e) {
     e.preventDefault();
+    e.stopPropagation();
+
     dispatch(addTodo(createTodo(title, isComplete))).then(function () {
       setTitle("");
       setIsComplete(false);

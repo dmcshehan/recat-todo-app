@@ -22,6 +22,7 @@ export default function AddTodoListForm() {
 
   function onFormSubmit(e) {
     e.preventDefault();
+    e.stopPropagation();
     dispatch(addTodoList(todoList));
   }
 

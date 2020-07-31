@@ -39,8 +39,6 @@ export default function App() {
       }
     });
 
-    console.log(screenSize);
-
     function handleResize() {
       const { innerWidth } = window;
       if (innerWidth <= 768) {
