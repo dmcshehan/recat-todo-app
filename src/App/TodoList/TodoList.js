@@ -7,7 +7,7 @@ import AddTodoListForm from "../AddTodoListForm/AddTodoListForm";
 
 import { fetchTodoLists } from "../../store/actionCreators/todoList";
 
-import { list, open, close } from "./TodoLists.module.scss";
+import { list } from "./TodoLists.module.scss";
 
 export default function TodoList() {
   const dispatch = useDispatch();
