@@ -16,11 +16,6 @@ export default function AddTodoForm() {
 
   useEffect(() => {
     input.current.focus();
-
-    return () => {
-      setTitle("");
-      setIsComplete(false);
-    };
   });
 
   function handleChange(e) {
