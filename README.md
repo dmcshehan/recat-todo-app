@@ -6,11 +6,6 @@ A todo application built with React, React Hooks and Firebase. A user can add da
 
 ![featured image of todo app](https://i.imgur.com/XmvXqcM.png)
 
-## Buy me a coffee
-
-Whether you use this project, have learned something from it, or just like it, please consider supporting it by buying me a coffee, so I can dedicate more time on open-source projects like this :)
-
-<a href="https://www.buymeacoffee.com/dmcshehan" target="_blank"><img src="https://www.buymeacoffee.com/assets/img/custom_images/orange_img.png" alt="Buy Me A Coffee" style="height: auto !important;width: auto !important;" ></a>
 
 ## Features
 
@@ -39,3 +34,9 @@ Whether you use this project, have learned something from it, or just like it, p
 ## License
 
 [MIT License](https://github.com/dmcshehan/todo-app/blob/master/LICENSE.md)
+
+## Buy me a coffee
+
+Whether you use this project, have learned something from it, or just like it, please consider supporting it by buying me a coffee, so I can dedicate more time on open-source projects like this :)
+
+<a href="https://www.buymeacoffee.com/dmcshehan" target="_blank"><img src="https://www.buymeacoffee.com/assets/img/custom_images/orange_img.png" alt="Buy Me A Coffee" style="height: auto !important;width: auto !important;" ></a>
